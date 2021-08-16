@@ -3,14 +3,14 @@ import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
 import torch
-from dataset import HEIGHT, WIDTH, CHARNUM, CHARLEN, lst_to_str
+from dataset import HEIGHT, WIDTH, CLASS_NUM, CHAR_LEN, lst_to_str
 
 
 def eval_acc(label, pred):
-    # label: CHARLEN x batchsize
-    # pred: CHARLEN x batchsize x CHARNUM
-    pred_res = pred.argmax(dim=2) # CHARLEN x batchsize
-    eq = ((pred_res == label).float().sum(dim=0)==CHARLEN).float() #batchsize
+    # label: CHAR_LEN x batchsize
+    # pred: CHAR_LEN x batchsize x CLASS_NUM
+    pred_res = pred.argmax(dim=2) # CHAR_LEN x batchsize
+    eq = ((pred_res == label).float().sum(dim=0)==CHAR_LEN).float() #batchsize
     return eq.sum()/eq.size(0)
 
 
@@ -30,7 +30,7 @@ class captcha_model(pl.LightningModule):
         y_hat = self(x).permute(1, 0, 2)
         y = y.permute(1, 0)
         loss = torch.tensor([F.cross_entropy(y_hat[i], y[i])
-                            for i in range(CHARLEN)], requires_grad=True).sum()
+                            for i in range(CHAR_LEN)], requires_grad=True).sum()
         return loss, y, y_hat
 
     def training_step(self, batch, batch_idx):
@@ -57,11 +57,11 @@ class model_resnet(torch.nn.Module):
     def __init__(self):
         super(model_resnet, self).__init__()
         self.resnet = models.resnet18(pretrained=False)
-        self.resnet.fc = nn.Linear(512, CHARLEN*CHARNUM)
+        self.resnet.fc = nn.Linear(512, CHAR_LEN*CLASS_NUM)
 
     def forward(self, x):
         x = self.resnet(x)
-        x = x.view(x.size(0), CHARLEN, CHARNUM)
+        x = x.view(x.size(0), CHAR_LEN, CLASS_NUM)
         return x
 
 
@@ -81,7 +81,7 @@ class captcha_model(pl.LightningModule):
         y_hat = self(x).permute(1, 0, 2)
         y = y.permute(1, 0)
         loss = 0
-        for i in range(CHARLEN):
+        for i in range(CHAR_LEN):
             loss += F.cross_entropy(y_hat[i], y[i])
         return loss, y, y_hat
 
@@ -121,11 +121,11 @@ class model_resnet(torch.nn.Module):
     def __init__(self):
         super(model_resnet, self).__init__()
         self.resnet = models.resnet18(pretrained=False)
-        self.resnet.fc = nn.Linear(512, CHARLEN*CHARNUM)
+        self.resnet.fc = nn.Linear(512, CHAR_LEN*CLASS_NUM)
 
     def forward(self, x):
         x = self.resnet(x)
-        x = x.view(x.size(0), CHARLEN, CHARNUM)
+        x = x.view(x.size(0), CHAR_LEN, CLASS_NUM)
         return x
 
 
@@ -157,9 +157,9 @@ class model_conv(torch.nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(128*(WIDTH//8)*(HEIGHT//8), 1024),
             nn.ReLU(),
-            nn.Linear(1024, CHARNUM*CHARLEN)
+            nn.Linear(1024, CLASS_NUM*CHAR_LEN)
         )
-        # CHARNUM*4
+        # CLASS_NUM*4
 
     def forward(self, x):
         x = self.layer1(x)
@@ -167,5 +167,5 @@ class model_conv(torch.nn.Module):
         x = self.layer3(x)
         x = x.view(x.size(0), -1)
         x = self.fc(x)
-        x = x.view(x.size(0), CHARLEN, CHARNUM)
+        x = x.view(x.size(0), CHAR_LEN, CLASS_NUM)
         return x

@@ -5,18 +5,16 @@ from dataset import captcha_dataset
 from torch.utils.data import DataLoader
 
 
-
 class captcha_dm(LightningDataModule):
-    def __init__(self,data_root="./dataset",batch_size=128,num_workers=8):
+    def __init__(self, batch_size=128, num_workers=8):
         super(captcha_dm,self).__init__()
-        self.data_root = data_root
         self.batch_size = batch_size
         self.num_workers = num_workers
 
     def setup(self, stage:  Optional[str]) -> None:
-        self.train_dataset = captcha_dataset(self.data_root, 'train')
-        self.val_dataset = captcha_dataset(self.data_root, 'val')
-        self.test_dataset = captcha_dataset(self.data_root, 'test')
+        self.train_dataset = captcha_dataset('train')
+        self.val_dataset = captcha_dataset('val')
+        self.test_dataset = captcha_dataset('test')
     
     def train_dataloader(self):
         return DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True)

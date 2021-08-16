@@ -2,8 +2,11 @@ from captcha.image import ImageCaptcha
 import random
 import os
 from tqdm import trange
+from utils.config_util import configGetter
 
-image = ImageCaptcha(fonts=['./fonts/font1.ttf'])
+cfg = configGetter('DATASET')
+
+image = ImageCaptcha(fonts=[cfg['CAPTCHA']['FONT_DIR']])
 
 def randomSeqGenerator(captcha_len):
     ret = ""
@@ -22,7 +25,13 @@ def captchaGenerator(dataset_path, dataset_len, captcha_len):
         save_path = os.path.join(dataset_path, f'{char_seq}.{i}.png')
         image.write(char_seq, save_path)
 
-if __name__ == "__main__":
-    captchaGenerator('./onechar/train', 100000, 1)
-    captchaGenerator('./onechar/val', 20000, 1)
-    captchaGenerator('./onechar/test', 20000, 1)
+def generateCaptcha
+    TRAINING_DIR = cfg['TRAINING_DIR']
+    TESTING_DIR = cfg['TESTING_DIR']
+    TRAINING_DATASET_LEN = cfg['TRAINING_DATASET_LEN']
+    TRAINING_DATASET_LEN = cfg['TESTING__DATASET_LEN']
+    CHAR_LEN = cfg['CAPTCHA']['CHAR_LEN']
+
+    captchaGenerator(TRAINING_DIR, TRAINING_DATASET_LEN, CHAR_LEN)
+    captchaGenerator(TESTING_DIR, TRAINING_DATASET_LEN, CHAR_LEN)
+    #captchaGenerator('./dataset/test', 20000, 4)

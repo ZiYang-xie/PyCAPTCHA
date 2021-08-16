@@ -1,0 +1,22 @@
+DATASET:
+  DATASET_DIR: './dataset'
+  TRAINING_DIR: './dataset/train'
+  TESTING_DIR: './dataset/val'
+
+  TRAINING_DATASET_LEN: 10000
+  TESTING__DATASET_LEN: 1000
+
+  CAPTCHA:
+    FONT_DIR: './fonts/font1.ttf'
+    IMG_HEIGHT: 60
+    IMG_WIDTH: 160
+    CLASS_NUM: 36
+    CHAR_LEN: 4
+
+SOLVER:
+  LR: 5.0e-4
+  BATCH_SIZE: 256
+
+LOGGER:
+  CHECKPOINT_DIR: './checkpoint'
+  LOG_DIR: './logs'

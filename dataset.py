@@ -7,22 +7,25 @@ from PIL import Image
 import os
 
 from torchvision.transforms.transforms import Resize
+from utils.config_util import configGetter
 
-HEIGHT = 60
-WIDTH = 160
-CHARNUM = 36
-CHARLEN = 4
+cfg = configGetter('DATASET')
+
+HEIGHT = cfg['CAPTCHA']['IMG_HEIGHT']
+WIDTH = cfg['CAPTCHA']['IMG_WIDTH']
+CLASS_NUM = cfg['CAPTCHA']['CLASS_NUM']
+CHAR_LEN = cfg['CAPTCHA']['CHAR_LEN']
 
 
 class captcha_dataset(data.Dataset):
-    def __init__(self, data_root: str, data_type: str) -> None:
+    def __init__(self, data_type: str) -> None:
         super().__init__()
         if data_type == 'train':
-            self.data_path = data_root + '/train/'
+            self.data_path = cfg['TRAINING_DIR']
         elif data_type == 'val':
-            self.data_path = data_root + '/val/'
+            self.data_path = cfg['TESTING_DIR']
         elif data_type == 'test':
-            self.data_path = data_root + '/test/'
+            self.data_path = cfg['TESTING_DIR']
         else:
             raise ValueError('data_type must be train, val or test')
         self.data_list = os.listdir(self.data_path)
@@ -32,7 +35,7 @@ class captcha_dataset(data.Dataset):
         ])
 
     def __getitem__(self, index):
-        img_path = self.data_path + self.data_list[index]
+        img_path = os.path.join(self.data_path, self.data_list[index])
         img = self.transform(Image.open(img_path))
         label = self.data_list[index].split('.')[0].lower()
         return img, str_to_vec(label)
@@ -66,7 +69,7 @@ def lst_to_str(lst: list):
 
 
 def str_to_onehotvec(s: str):
-    return F.one_hot(torch.LongTensor(str_to_lst(s)), CHARNUM)
+    return F.one_hot(torch.LongTensor(str_to_lst(s)), CLASS_NUM)
 
 
 def str_to_vec(s: str):
