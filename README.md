@@ -51,7 +51,7 @@ python utils/captcha_generater.py
 
 ### Step3: Start Training
 ```shell
-python launcher.py --exp_name "my_exp" // Start Training
+python launcher.py --exp_name "my_exp" #Start Training
 ```
 *check out the ```utils/arg_parsers.py``` for details*
 
@@ -59,6 +59,6 @@ python launcher.py --exp_name "my_exp" // Start Training
 
 ## Testing 📝
 ```shell
-python test.py --ckpt "your_ckpt" // Start Testing
+python test.py --ckpt "your_ckpt"  #Start Testing
 ```
 *check out the ```utils/arg_parsers.py``` for details*
