@@ -53,7 +53,7 @@ class captcha_model(pl.LightningModule):
             label = label.permute(1, 0)
             y = y.permute(1, 0, 2)
             pred = y.argmax(dim=2)
-            res = [f"pred:{lst_to_str(pred[i])}, real:{lst_to_str(label[i])}" for i in range(pred.size(0))]
+            res = [f"pred:{lst_to_str(pred[i])}, true:{lst_to_str(label[i])}" for i in range(pred.size(0))]
             print("\n".join(res))
         return loss
 
