@@ -8,6 +8,8 @@ Training 2 epoch under 100k images to get over 96% acc on Val dataset 🤩
 
 ![](./assets/testing.png)
 
+![](./assets/captcha.png)
+
 ## INSTALL ⚙️
 ### Step1: Create & Activate Conda Env
 ```shell
