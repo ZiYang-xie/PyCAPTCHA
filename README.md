@@ -3,7 +3,7 @@
 ---
 
 **An End-to-end Pytorch-Lightning implemented captcha OCR model.**  
-Training 2 epoch under 100k images to get over 96% acc on Val dataset 🤩
+Training 2 epoch under 100k images to get over 96% acc on Val dataset 🤩  
 *with 200k or even more training set you may get >98% acc*
 
 ### INSTALL ⚙️
