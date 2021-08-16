@@ -2,3 +2,6 @@ dataset/
 __pycache__/
 logs/
 onechar/
+test.ipynb
+*.pth
+

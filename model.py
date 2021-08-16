@@ -3,15 +3,15 @@ import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
 import torch
-from dataset import HEIGHT, WIDTH, CHARNUM, CHARLEN
+from dataset import HEIGHT, WIDTH, CHARNUM, CHARLEN, lst_to_str
 
 
 def eval_acc(label, pred):
-    acc = 0
-    for i in range(CHARLEN):
-        acc += (label[i] == torch.argmax(pred[i], dim=1)
-                ).sum().item()/label[i].shape[0]
-    return acc/len(label)
+    # label: CHARLEN x batchsize
+    # pred: CHARLEN x batchsize x CHARNUM
+    pred_res = pred.argmax(dim=2) # CHARLEN x batchsize
+    eq = ((pred_res == label).float().sum(dim=0)==CHARLEN).float() #batchsize
+    return eq.sum()/eq.size(0)
 
 
 class captcha_model(pl.LightningModule):
@@ -64,6 +64,7 @@ class model_resnet(torch.nn.Module):
         x = x.view(x.size(0), CHARLEN, CHARNUM)
         return x
 
+
 class captcha_model(pl.LightningModule):
     def __init__(self, model, lr=1e-4, optimizer=None):
         super(captcha_model, self).__init__()
@@ -96,6 +97,18 @@ class captcha_model(pl.LightningModule):
         self.log("val acc", eval_acc(label, y))
         return loss
 
+    def test_step(self, batch, batch_idx):
+        loss, label, y = self.step(batch, batch_idx)
+        self.log("test loss", loss.item())
+        self.log("test acc", eval_acc(label, y))
+        if batch_idx == 0:
+            label = label.permute(1, 0)
+            y = y.permute(1, 0, 2)
+            pred = y.argmax(dim=2)
+            res = [f"pred:{lst_to_str(pred[i])}, real:{lst_to_str(label[i])}" for i in range(pred.size(0))]
+            print("\n".join(res))
+        return loss
+
     def configure_optimizers(self):
         if self.optimizer is None:
             optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
@@ -114,6 +127,7 @@ class model_resnet(torch.nn.Module):
         x = self.resnet(x)
         x = x.view(x.size(0), CHARLEN, CHARNUM)
         return x
+
 
 class model_conv(torch.nn.Module):
     def __init__(self):

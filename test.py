@@ -1,14 +1,12 @@
 from model import captcha_model, model_conv, model_resnet
 from datamodule import captcha_dm
 import pytorch_lightning as pl
-import torch.optim as optim
-import torch
+
+CHKPATH = 'logs/main/version_1/checkpoints/epoch=1-step=1539.ckpt'
+
 if __name__ == "__main__":
-    pl.seed_everything(42)
-    m = model_resnet()
-    model = captcha_model(
-        model=m, lr=3e-4)
-    dm = captcha_dm(data_root="./dataset", batch_size=256)
+    dm = captcha_dm()
+    model = captcha_model.load_from_checkpoint(CHKPATH,model=model_resnet())
     tb_logger = pl.loggers.TensorBoardLogger(
         "./logs/", name='main', version=2, default_hp_metric=False)
     trainer = pl.Trainer(deterministic=True,
@@ -21,5 +19,4 @@ if __name__ == "__main__":
                          log_every_n_steps=50,
                          stochastic_weight_avg=True
                          )
-    trainer.fit(model, datamodule=dm)
-    torch.save(model.state_dict(), "./model.pth")
+    trainer.test(model, dm)
