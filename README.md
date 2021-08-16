@@ -6,25 +6,26 @@
 Training 2 epoch under 100k images to get over 96% acc on Val dataset 🤩  
 *with 200k or even more training set you may get >98% acc*
 
-### INSTALL ⚙️
-#### Step1: Create & Activate Conda Env
+## INSTALL ⚙️
+### Step1: Create & Activate Conda Env
 ```shell
 conda create -n "PyCaptcha" python=3.7
 conda activate PyCaptcha
 ```
 
-#### Step2: Install Pytorch 
+### Step2: Install Pytorch 
 ```shell
 conda install torch==1.9.0 torchvision==0.10.0 -c pytorch
 ```
 
-#### Step3: Install Pip Requirements 
+### Step3: Install Pip Requirements 
 ```shell
 pip install -r requirement.txt
 ```
 
-### Training 🚀
-#### Step1: Set the Config file
+## Training 🚀
+### Step1: Set the Config file
+Check out the yaml file  
 ```yaml
 DATASET:
   DATASET_DIR: './dataset'
@@ -41,24 +42,23 @@ LOGGER:
   LOG_DIR: './logs'
 ```
 
-Check OUT the Yaml
 
-#### Step2: Check the Dataset
+### Step2: Check the Dataset
 Make sure you have a dataset, you can generate the dataset with the ```utils/captcha_generater.py``` script
 ```shell
 python utils/captcha_generater.py
 ```
 
-#### Step3: Start Training
+### Step3: Start Training
 ```shell
 python launcher.py --exp_name "my_exp" // Start Training
 ```
-*check out the utils/arg_parsers.py for details*
+*check out the ```utils/arg_parsers.py``` for details*
 
 > The tensorboard and ckpt file will save at ```logs```
 
-### Testing 📝
+## Testing 📝
 ```shell
 python test.py --ckpt "your_ckpt" // Start Testing
 ```
-*check out the utils/arg_parsers.py for details*
+*check out the ```utils/arg_parsers.py``` for details*
