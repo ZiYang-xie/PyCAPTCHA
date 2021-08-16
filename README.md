@@ -2,7 +2,7 @@
 ![版本号](https://img.shields.io/badge/Version-Beta--0.0.1-blue) ![作者](https://img.shields.io/badge/Author-Xzy-orange)  
 ---
 
-An End-to-end Pytorch-Lightning implemented captcha OCR model.
+**An End-to-end Pytorch-Lightning implemented captcha OCR model.**  
 Training 2 epoch under 100k images to get 96% acc on Val dataset 🤩
 
 ### INSTALL ⚙️
