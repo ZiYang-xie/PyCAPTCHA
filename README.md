@@ -1,11 +1,12 @@
 # PyCAPTCHA 🔍
 ![版本号](https://img.shields.io/badge/Version-Beta--0.0.1-blue) ![作者](https://img.shields.io/badge/Author-Xzy-orange)  
+
+![](./assets/captcha.png)
 ---
 
 **An End-to-end Pytorch-Lightning implemented CAPTCHA OCR model.**  
 Training 2 epoch under 100k images to get over 96% acc on Val dataset 🤩  
-![](./assets/captcha.png)
-*with 200k or even more training set you may get >98% acc*
+> with 200k or even more training set you may get >98% acc
 
 ![](./assets/testing.png)
 
