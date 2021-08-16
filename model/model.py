@@ -13,58 +13,6 @@ def eval_acc(label, pred):
     eq = ((pred_res == label).float().sum(dim=0)==CHAR_LEN).float() #batchsize
     return eq.sum()/eq.size(0)
 
-
-class captcha_model(pl.LightningModule):
-    def __init__(self, model, lr=1e-4, optimizer=None):
-        super(captcha_model, self).__init__()
-        self.model = model
-        self.lr = lr
-        self.optimizer = optimizer
-
-    def forward(self, x):
-        x = self.model(x)
-        return x
-
-    def step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self(x).permute(1, 0, 2)
-        y = y.permute(1, 0)
-        loss = torch.tensor([F.cross_entropy(y_hat[i], y[i])
-                            for i in range(CHAR_LEN)], requires_grad=True).sum()
-        return loss, y, y_hat
-
-    def training_step(self, batch, batch_idx):
-        loss, label, y = self.step(batch, batch_idx)
-        self.log("train loss", loss.item())
-        self.log("train acc", eval_acc(label, y))
-        return loss
-
-    def validation_step(self, batch, batch_idx):
-        loss, label, y = self.step(batch, batch_idx)
-        self.log("val loss", loss.item())
-        self.log("val acc", eval_acc(label, y))
-        return loss
-
-    def configure_optimizers(self):
-        if self.optimizer is None:
-            optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
-        else:
-            optimizer = self.optimizer
-        return optimizer
-
-
-class model_resnet(torch.nn.Module):
-    def __init__(self):
-        super(model_resnet, self).__init__()
-        self.resnet = models.resnet18(pretrained=False)
-        self.resnet.fc = nn.Linear(512, CHAR_LEN*CLASS_NUM)
-
-    def forward(self, x):
-        x = self.resnet(x)
-        x = x.view(x.size(0), CHAR_LEN, CLASS_NUM)
-        return x
-
-
 class captcha_model(pl.LightningModule):
     def __init__(self, model, lr=1e-4, optimizer=None):
         super(captcha_model, self).__init__()

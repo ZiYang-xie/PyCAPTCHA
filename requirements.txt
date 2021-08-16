@@ -1,4 +1,4 @@
-pytorch-lightning
+pytorch-lightning==1.4.1
 torch==1.6.0
 torchvision==0.7.0
 captcha

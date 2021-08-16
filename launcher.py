@@ -4,22 +4,11 @@ import pytorch_lightning as pl
 import torch.optim as optim
 import torch
 from utils.config_util import configGetter
-from argparse import ArgumentParser
+from utils.arg_parsers import train_arg_parser
 
 cfg  = configGetter('SOLVER')
 lr = cfg['LR']
 batch_size = cfg['BATCH_SIZE']
-
-def arg_parser():
-    parser = ArgumentParser()
-    parser.add_argument("--exp_name", default='exp1')
-    parser.add_argument("--gpus", default=-1)
-    parser.add_argument("--max_epochs", default=5)
-    parser.add_argument("--log_dir", default='./logs/')
-    parser.add_argument("--save_path", default='./checkpoint/model.pth')
-    args = parser.parse_args()
-    return args
-
 
 def main(arg):
     pl.seed_everything(42)
@@ -45,7 +34,7 @@ def main(arg):
     torch.save(model.state_dict(), args.save_path)
     
 if __name__ == "__main__":
-    args = arg_parser()
+    args = train_arg_parser()
     main(args)
 
     

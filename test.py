@@ -1,14 +1,13 @@
 from model.model import captcha_model, model_conv, model_resnet
-from datamodule import captcha_dm
+from data.datamodule import captcha_dm
+from utils.arg_parsers import test_arg_parser
 import pytorch_lightning as pl
 
-CHKPATH = 'logs/main/version_2/checkpoints/epoch=4-step=1954.ckpt'
-
-if __name__ == "__main__":
+def test(args):
     dm = captcha_dm()
-    model = captcha_model.load_from_checkpoint(CHKPATH, model=model_resnet())
+    model = captcha_model.load_from_checkpoint(args.ckpt, model=model_resnet())
     tb_logger = pl.loggers.TensorBoardLogger(
-        "./logs/", name='main', version=2, default_hp_metric=False)
+        args.log_dir, name=args.test_name, version=2, default_hp_metric=False)
     trainer = pl.Trainer(deterministic=True,
                          gpus=-1,
                          auto_select_gpus=True,
@@ -20,3 +19,7 @@ if __name__ == "__main__":
                          stochastic_weight_avg=True
                          )
     trainer.test(model, dm)
+
+if __name__ == "__main__":
+    args = test_arg_parser()
+    test(args)
