@@ -3,8 +3,8 @@ DATASET:
   TRAINING_DIR: './dataset/train'
   TESTING_DIR: './dataset/val'
 
-  TRAINING_DATASET_LEN: 10000
-  TESTING__DATASET_LEN: 1000
+  TRAINING_DATASET_LEN: 10
+  TESTING__DATASET_LEN: 10
 
   CAPTCHA:
     FONT_DIR: './fonts/font1.ttf'

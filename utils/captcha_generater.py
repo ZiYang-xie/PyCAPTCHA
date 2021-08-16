@@ -2,7 +2,7 @@ from captcha.image import ImageCaptcha
 import random
 import os
 from tqdm import trange
-from utils.config_util import configGetter
+from config_util import configGetter
 
 cfg = configGetter('DATASET')
 
@@ -25,7 +25,7 @@ def captchaGenerator(dataset_path, dataset_len, captcha_len):
         save_path = os.path.join(dataset_path, f'{char_seq}.{i}.png')
         image.write(char_seq, save_path)
 
-def generateCaptcha
+def generateCaptcha():
     TRAINING_DIR = cfg['TRAINING_DIR']
     TESTING_DIR = cfg['TESTING_DIR']
     TRAINING_DATASET_LEN = cfg['TRAINING_DATASET_LEN']
@@ -35,3 +35,6 @@ def generateCaptcha
     captchaGenerator(TRAINING_DIR, TRAINING_DATASET_LEN, CHAR_LEN)
     captchaGenerator(TESTING_DIR, TRAINING_DATASET_LEN, CHAR_LEN)
     #captchaGenerator('./dataset/test', 20000, 4)
+    
+if __name__ == "__main__":
+    generateCaptcha()
