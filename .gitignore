@@ -5,4 +5,5 @@ onechar/
 test.ipynb
 *.pth
 *.ckpt
+*.ipynb
 events.out*
