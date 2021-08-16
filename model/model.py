@@ -3,7 +3,7 @@ import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
 import torch
-from dataset import HEIGHT, WIDTH, CLASS_NUM, CHAR_LEN, lst_to_str
+from data.dataset import HEIGHT, WIDTH, CLASS_NUM, CHAR_LEN, lst_to_str
 
 
 def eval_acc(label, pred):
