@@ -13,9 +13,6 @@ cfg = configGetter('DATASET')
 
 HEIGHT = cfg['CAPTCHA']['IMG_HEIGHT']
 WIDTH = cfg['CAPTCHA']['IMG_WIDTH']
-CLASS_NUM = cfg['CAPTCHA']['CLASS_NUM']
-CHAR_LEN = cfg['CAPTCHA']['CHAR_LEN']
-
 
 class captcha_dataset(data.Dataset):
     def __init__(self, data_type: str) -> None:
@@ -37,6 +34,7 @@ class captcha_dataset(data.Dataset):
     def __getitem__(self, index):
         img_path = os.path.join(self.data_path, self.data_list[index])
         img = self.transform(Image.open(img_path))
+        img = img.resize((HEIGHT, WIDTH))
         label = self.data_list[index].split('.')[0].lower()
         return img, str_to_vec(label)
 

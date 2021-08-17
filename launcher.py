@@ -9,7 +9,7 @@ from utils.arg_parsers import train_arg_parser
 cfg  = configGetter('SOLVER')
 lr = cfg['LR']
 batch_size = cfg['BATCH_SIZE']
-epochs = cfg['EPOCHS']
+epoch = cfg['EPOCH']
 
 def main(arg):
     pl.seed_everything(42)
@@ -27,7 +27,7 @@ def main(arg):
                          precision=32,
                          logger=tb_logger,
                          fast_dev_run=False,
-                         max_epochs=epochs,
+                         max_epochs=epoch,
                          log_every_n_steps=50,
                          stochastic_weight_avg=True
                          )
