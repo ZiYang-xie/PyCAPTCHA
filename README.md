@@ -1,5 +1,5 @@
 # PyCAPTCHA 🔍
-![版本号](https://img.shields.io/badge/Version-Beta--0.0.1-blue) ![作者](https://img.shields.io/badge/Author-Xzy-orange)  
+![版本号](https://img.shields.io/badge/Version-Beta--0.0.1-blue)
 
 ![](./assets/captcha.png)
 ---
