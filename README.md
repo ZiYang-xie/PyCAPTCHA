@@ -1,5 +1,9 @@
 # PyCAPTCHA 🔍
 ![版本号](https://img.shields.io/badge/Version-Beta--0.0.1-blue)
+![issues](https://img.shields.io/github/issues/ZiYang-xie/PyCAPTCHA?style=plastic)
+![forks](https://img.shields.io/github/forks/ZiYang-xie/PyCAPTCHA)
+![stars](https://img.shields.io/github/stars/ZiYang-xie/PyCAPTCHA)
+![License](https://img.shields.io/github/license/ZiYang-xie/PyCAPTCHA)
 
 ![](./assets/captcha.png)
 ---
