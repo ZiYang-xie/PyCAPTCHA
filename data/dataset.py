@@ -13,6 +13,9 @@ cfg = configGetter('DATASET')
 
 HEIGHT = cfg['CAPTCHA']['IMG_HEIGHT']
 WIDTH = cfg['CAPTCHA']['IMG_WIDTH']
+CLASS_NUM = cfg['CAPTCHA']['CLASS_NUM']
+CHAR_LEN = cfg['CAPTCHA']['CHAR_LEN']
+
 
 class captcha_dataset(data.Dataset):
     def __init__(self, data_type: str) -> None:
