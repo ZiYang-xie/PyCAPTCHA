@@ -29,11 +29,11 @@ def generateCaptcha():
     TRAINING_DIR = cfg['TRAINING_DIR']
     TESTING_DIR = cfg['TESTING_DIR']
     TRAINING_DATASET_LEN = cfg['TRAINING_DATASET_LEN']
-    TRAINING_DATASET_LEN = cfg['TESTING__DATASET_LEN']
+    TESTING__DATASET_LEN = cfg['TESTING__DATASET_LEN']
     CHAR_LEN = cfg['CAPTCHA']['CHAR_LEN']
 
     captchaGenerator(TRAINING_DIR, TRAINING_DATASET_LEN, CHAR_LEN)
-    captchaGenerator(TESTING_DIR, TRAINING_DATASET_LEN, CHAR_LEN)
+    captchaGenerator(TESTING_DIR, TESTING__DATASET_LEN, CHAR_LEN)
     #captchaGenerator('./dataset/test', 20000, 4)
     
 if __name__ == "__main__":
