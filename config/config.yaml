@@ -3,7 +3,7 @@ DATASET:
   TRAINING_DIR: './dataset/train'
   TESTING_DIR: './dataset/val'
 
-  TRAINING_DATASET_LEN: 10000
+  TRAINING_DATASET_LEN: 10000 # Change this to 100k may get better performance
   TESTING__DATASET_LEN: 1000
 
   CAPTCHA:
