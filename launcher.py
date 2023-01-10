@@ -3,6 +3,7 @@ from data.datamodule import captcha_dm
 import pytorch_lightning as pl
 import torch.optim as optim
 import torch
+import os
 from utils.config_util import configGetter
 from utils.arg_parsers import train_arg_parser
 
@@ -32,7 +33,8 @@ def main(arg):
                          stochastic_weight_avg=True
                          )
     trainer.fit(model, datamodule=dm)
-    torch.save(model.state_dict(), args.save_path)
+    os.makedirs(args.save_path, exist_ok=True)
+    trainer.save_checkpoint(os.path.join(args.save_path, 'model.pth'))
     
 if __name__ == "__main__":
     args = train_arg_parser()

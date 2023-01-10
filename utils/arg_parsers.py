@@ -5,7 +5,7 @@ def train_arg_parser():
     parser.add_argument("--exp_name", default='exp1')
     parser.add_argument("--gpus", default=-1)
     parser.add_argument("--log_dir", default='./logs/')
-    parser.add_argument("--save_path", default='./checkpoint/model.pth')
+    parser.add_argument("--save_path", default='./checkpoint/')
     args = parser.parse_args()
     return args
 

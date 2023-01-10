@@ -30,6 +30,7 @@ class captcha_dataset(data.Dataset):
             raise ValueError('data_type must be train, val or test')
         self.data_list = os.listdir(self.data_path)
         self.transform = transforms.Compose([
+            transforms.Resize((HEIGHT, WIDTH)),
             transforms.ToTensor(),
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
@@ -37,7 +38,6 @@ class captcha_dataset(data.Dataset):
     def __getitem__(self, index):
         img_path = os.path.join(self.data_path, self.data_list[index])
         img = self.transform(Image.open(img_path))
-        img = img.resize((HEIGHT, WIDTH))
         label = self.data_list[index].split('.')[0].lower()
         return img, str_to_vec(label)
 
